@@ -2,27 +2,25 @@
 
 
 #include "TCG/Public/Hand.h"
-
-#include "TCGGameMode.h"
 #include "TCG/Public/Card.h"
 #include "TCG/Public/CardData.h"
 
 // Sets default values
-AHand::AHand()
+UHand::UHand()
 {
- 	// 손 패는 업데이트 될 경우가 많으니까 Tick true
-	PrimaryActorTick.bCanEverTick = true;
+	// 손 패는 업데이트 될 경우가 많으니까 Tick true
+	PrimaryComponentTick.bCanEverTick = true;
 	MaxHandSize = 10;
 
 	/*ATCGGameMode* GameMode = Cast<ATCGGameMode>(GetWorld()->GetAuthGameMode());
 	if(GameMode)
 	{
-		GameMode->TurnStateDelegate.AddDynamic(this, &AHand::ArrangeCardInHand);
+		GameMode->TurnStateDelegate.AddDynamic(this, &UHand::ArrangeCardInHand);
 	}*/
 }
 
 //이벤트(함수)가 제대로 동작했는지 확인하기 위해 return을 bool 타입으로
-bool AHand::AddCardToHand(ACard* NewCard)
+bool UHand::AddCardToHand(ACard* NewCard)
 {
 	if(NewCard && !IsHandFull())
 	{
@@ -34,7 +32,7 @@ bool AHand::AddCardToHand(ACard* NewCard)
 	return false;
 }
 
-bool AHand::RemoveCardFromHand(ACard* CardToRemove)
+bool UHand::RemoveCardFromHand(ACard* CardToRemove)
 {
 	if(CardToRemove && CardsInHand.Contains(CardToRemove))
 	{
@@ -45,12 +43,12 @@ bool AHand::RemoveCardFromHand(ACard* CardToRemove)
 	return false;
 }
 
-bool AHand::IsHandFull() const
+bool UHand::IsHandFull() const
 {
 	return (CardsInHand.Num() >= MaxHandSize);
 }
 
-void AHand::ArrangeCardInHand()
+void UHand::ArrangeCardInHand()
 {
 	//손 패에 카드를 배치
 	const float CardSpacing = 10.f;
@@ -66,7 +64,7 @@ void AHand::ArrangeCardInHand()
 	}
 }
 
-void AHand::PrintHandInfo() const
+void UHand::PrintHandInfo() const
 {
 	UE_LOG(LogTemp, Log, TEXT("Hand contains cards Num: %d"), CardsInHand.Num());
 	for(const ACard* Card : CardsInHand)

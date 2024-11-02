@@ -16,19 +16,29 @@ public:
 	// Sets default values for this actor's properties
 	ADeck();
 
-	int32 MaxDeckNum;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Deck")
+	class UCapsuleComponent* CapsuleComp;
 
-	TArray<ACard*> Cards;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Deck")
+	class UStaticMeshComponent* DeckMesh;
+
+	int32 MaxDeckNum;
 
 	UFUNCTION()
 	void ShuffleDeck();
 
 	void AddCardToDeck(ACard* Card);
+	bool IsFullDeck();
 
-	ACard* DrawCard(class AHand* PlayerHand);
+	ACard* DrawCard(class UHand* PlayerHand);
 
 	ACard* FindCardByName(const FString& Name) const;
-
+	
+	TArray<ACard*> GetDeck();
+	
 	void PrintDeckInfo() const;
+
+private:
+	TArray<ACard*> Cards;
 
 };

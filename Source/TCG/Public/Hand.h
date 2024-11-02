@@ -3,19 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Components/ActorComponent.h"
 #include "Hand.generated.h"
 
 class ACard;
-UCLASS()
-class TCG_API AHand : public AActor
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+class TCG_API UHand : public UActorComponent
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	AHand();
 
+public:
+	// Sets default values for this component's properties
+	UHand();
+
+	// Sets default values for this actor's properties
 	TArray<ACard*> CardsInHand;
 
 	int32 MaxHandSize;

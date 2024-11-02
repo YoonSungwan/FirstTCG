@@ -12,7 +12,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMinionSummoned);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnManaCostCardPlayed);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDamageDelegate, ACard*, Inisiator);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSummonDelegate, AHand*, SummonedMinion);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSummonDelegate, UHand*, SummonedMinion);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSpellDelegate, ACard*, Inisiator, UCardData*, CardData);
 
 class USecretCardData;

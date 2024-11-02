@@ -25,10 +25,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	TArray<ACard*> Cards;
+	TArray<ACard*> DeckCards;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Deck")
-	ADeck* Deck;
+	TSubclassOf<ADeck> SubClassDeck;
 
 	void InitializeDeck();
+
+	TArray<FString> CardType;
 };

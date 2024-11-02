@@ -4,6 +4,8 @@
 #include "DeckEditor.h"
 #include "Card.h"
 #include "Deck.h"
+#include "HairStrandsInterface.h"
+#include "TCGPlayer.h"
 
 // Sets default values
 ADeckEditor::ADeckEditor()
@@ -17,7 +19,9 @@ void ADeckEditor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FString Type = "Spell";
+	CardType.Add(TEXT("Minion"));
+	CardType.Add(TEXT("Spell"));
+	CardType.Add(TEXT("Secret"));
 
 	InitializeDeck();
 }
@@ -30,11 +34,56 @@ void ADeckEditor::Tick(float DeltaTime)
 
 void ADeckEditor::InitializeDeck()
 {
-	ACard* Card = NewObject<ACard>();
+	if(!SubClassDeck)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Is not Setting deck"));
+		return;
+	}
 	
-	FString DataAssetName = FString("Minion").Append(FString::FromInt(2));
-	FString AssetPath = FString("/Game/DA_").Append(DataAssetName).Append(FString(".DA_")).Append(DataAssetName);
-	UE_LOG(LogTemp, Warning, TEXT("AssetPath is %s"), *AssetPath);
-	Card->LoadAndInitializeCardData(AssetPath);
+	ADeck* Deck = GetWorld()->SpawnActor<ADeck>(SubClassDeck);
+
+	if(!Deck)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Can't find deck"));
+		return;
+	}
+	for(FString Type : CardType)
+	{
+		for(int i=1; i<4; i++)
+		{
+			ACard* Card = NewObject<ACard>();
+			//Type
+			FString DataAssetName = FString("DA_").Append(Type).Append(FString::FromInt(i));
+			FString AssetPath = FString("/Game/DataAsset/").Append(Type).Append("/").Append(DataAssetName).Append(".").Append(DataAssetName);
+			UE_LOG(LogTemp, Warning, TEXT("AssetPath is %s"), *AssetPath);
+			
+			Card->LoadAndInitializeCardData(AssetPath);
+			
+			if(Card && Card->CardData)
+			{
+				Deck->AddCardToDeck(Card);
+				if(Deck->IsFullDeck())
+				{
+					return;
+				}
+			}
+		}	
+	}
+
+	/*if(GetWorld()->GetFirstPlayerController())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Find Player"));
+		ATCGPlayer* Player = Cast<ATCGPlayer>(GetWorld()->GetFirstPlayerController());
+		if(Player)
+		{
+			Player->Deck = Deck;
+			UE_LOG(LogTemp, Warning, TEXT("Player's Deck Setting over"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player's Deck Setting failed..."));
+		}
+	}*/
+	
 }
 

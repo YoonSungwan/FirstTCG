@@ -2,9 +2,10 @@
 
 
 #include "TCG/Public/Deck.h"
+
+#include "Components/CapsuleComponent.h"
 #include "TCG/Public/Card.h"
 #include "TCG/Public/CardData.h"
-#include "TCG/Public/TCGGameMode.h"
 #include "TCG/Public/Hand.h"
 
 // Sets default values
@@ -14,6 +15,12 @@ ADeck::ADeck()
 	PrimaryActorTick.bCanEverTick = false;
 
 	MaxDeckNum = 20;
+
+	CapsuleComp = CreateDefaultSubobject<UCapsuleComponent>("Capsule Component");
+	RootComponent = CapsuleComp;
+
+	DeckMesh = CreateDefaultSubobject<UStaticMeshComponent>("Deck Mesh");
+	DeckMesh->SetupAttachment(RootComponent);
 }
 
 
@@ -52,7 +59,7 @@ void ADeck::ShuffleDeck()
 
 void ADeck::AddCardToDeck(ACard* Card)
 {
-	if(Cards.Num() < MaxDeckNum)
+	if(!IsFullDeck())
 	{
 		Cards.Add(Card);	
 	}
@@ -62,7 +69,12 @@ void ADeck::AddCardToDeck(ACard* Card)
 	}
 }
 
-ACard* ADeck::DrawCard(class AHand* PlayerHand)
+bool ADeck::IsFullDeck()
+{
+	return Cards.Num() >= MaxDeckNum;
+}
+
+ACard* ADeck::DrawCard(class UHand* PlayerHand)
 {
 	if(Cards.Num() > 0)
 	{
@@ -89,6 +101,11 @@ ACard* ADeck::FindCardByName(const FString& Name) const
 		}
 	}
 	return nullptr;
+}
+
+TArray<ACard*> ADeck::GetDeck()
+{
+	return Cards;
 }
 
 void ADeck::PrintDeckInfo() const
