@@ -6,4 +6,5 @@
 void UCardData::ApplyEffect_Implementation(AActor* Target)
 {
 	UE_LOG(LogTemp, Log, TEXT("%s: 기본효과 적용"), *CardName);
+	
 }

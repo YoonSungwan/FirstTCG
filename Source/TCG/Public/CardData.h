@@ -28,10 +28,10 @@ public:
 	int32 Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Card")
-	ECardType CardType;
+	ECardType CardType;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Card")
-	UTexture2D* CardTexture;*/
+	UTexture2D* CardTexture;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Effect")
 	void ApplyEffect(AActor* Target);
