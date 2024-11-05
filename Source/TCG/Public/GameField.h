@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameRule.h"
+#include "AssetRegistry/AssetRegistryModule.h"
 #include "GameField.generated.h"
 
 class ATCGGameMode;
@@ -12,6 +13,7 @@ class ACard;
 class ACardGrave;
 class ADeck;
 class ATCGPlayer;
+class UCardWidget;
 
 //카드가 발동했을 때
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActivateCard, ACard*, ActivatedCard);
@@ -37,13 +39,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MeshComponent")
+	class UCapsuleComponent* CapsuleFieldComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MeshComponent")
+	class UStaticMeshComponent* StaticFieldComp;
+
 	FOnActivateCard OnActivateCard;
 	FOnSendCardToGrave OnSendCardToGrave;
 	FOnTargetPlayer OnTargetPlayer;
 
+	UPROPERTY()
+	ECardType CardType;
+	
 	int32 CardSlot;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Gamemode")
+	UPROPERTY()
 	ATCGGameMode* GameMode;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Field")
@@ -52,7 +63,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Grave")
 	ACardGrave* Grave;	
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Deck")
+	UPROPERTY()
 	ADeck* Deck;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Player")
@@ -63,4 +74,17 @@ public:
 	void ActivateCard(ATCGPlayer* TargetPlayer,ACard* Card);
 
 	void SalvageCard(ACard* Card);
+
+
+	//////////////////
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Deck")
+	TSubclassOf<ADeck> SubClassDeck;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Card")
+	TSubclassOf<UCardWidget> SubClassCard;
+
+	UFUNCTION()
+	void InitializeDeck();
+
+	int32 GetDAFileNum(FAssetRegistryModule& AssetRegistryModule, FString DA_FolderPath) const;
 };

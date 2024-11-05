@@ -18,6 +18,15 @@ enum class EGamePhase : uint8
 	TurnEnd,
 	GameEnd
 };
+
+UENUM(BlueprintType)
+enum class ECardType : uint8
+{
+	Minion,
+	Spell,
+	Secret
+};
+
 class TCG_API GameRule
 {
 public:
