@@ -2,6 +2,7 @@
 
 
 #include "TCG/Public/Card.h"
+#include "Components/CapsuleComponent.h"
 #include "TCG/Public/CardData.h"
 #include "TCG/Public/MinionCardData.h"
 
@@ -9,7 +10,12 @@ ACard::ACard()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-	
+
+	//CapsuleCardComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Card Capsule Component"));
+	//SetRootComponent(CapsuleCardComp);
+
+	StaticCardComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Card Static Component"));
+	SetRootComponent(StaticCardComp);
 }
 
 void ACard::InitializeCard(UCardData* InCardData)

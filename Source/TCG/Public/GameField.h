@@ -14,6 +14,7 @@ class ACardGrave;
 class ADeck;
 class ATCGPlayer;
 class UCardWidget;
+class UDeckEditorWidget;
 
 //카드가 발동했을 때
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnActivateCard, ACard*, ActivatedCard);
@@ -77,6 +78,13 @@ public:
 
 
 	//////////////////
+	
+	UPROPERTY(EditAnywhere, Category="EditorWidget")
+	TSubclassOf<UDeckEditorWidget> EditorWidgetClass;
+	
+	UPROPERTY()
+	UDeckEditorWidget* EditorWidget;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Deck")
 	TSubclassOf<ADeck> SubClassDeck;
 

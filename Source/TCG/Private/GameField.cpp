@@ -8,6 +8,7 @@
 #include "Deck.h"
 #include "TCGGameMode.h"
 #include "TCGPlayer.h"
+#include "DeckEditorWidget.h"
 #include "CardWidget.h"
 #include "Components/CapsuleComponent.h"
 
@@ -35,6 +36,16 @@ void AGameField::BeginPlay()
 	if(GameMode)
 	{
 		GameMode->SetCurrentPhase(EGamePhase::GameStart);
+	}
+
+	if(EditorWidgetClass)
+	{
+		EditorWidget = CreateWidget<UDeckEditorWidget>(GetWorld(), EditorWidgetClass);
+		
+		if(EditorWidget)
+		{
+			EditorWidget->OpenDeckEditor();
+		}
 	}
 
 	InitializeDeck();
@@ -116,7 +127,6 @@ void AGameField::InitializeDeck()
 			//데이터에셋 파일은 이름 규칙은 1부터 시작
 			FString DataAssetName = FString("DA_").Append(Type).Append(FString::FromInt(j+1));
 			FString AssetPath = FString("/Game/DataAsset/").Append(Type).Append("/").Append(DataAssetName).Append(".").Append(DataAssetName);
-			UE_LOG(LogTemp, Warning, TEXT("AssetPath is %s"), *AssetPath);
 			
 			Card->LoadAndInitializeCardData(AssetPath);
 			
@@ -131,6 +141,22 @@ void AGameField::InitializeDeck()
 		}
 	}
 
+	//TODO : 별도의 이벤트로 분리 & 델리게이트 처리
+	if(EditorWidget && EditorWidget->bIsEditorOpen)
+	{
+		if(SubClassCard)
+		{
+			EditorWidget->DisplayCardFromDeck(Deck, SubClassCard);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GameField : SubClassCard not setting"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GameField : EditorWidget not setting"));
+	}
 }
 
 //데이터에셋 파일 개수 리턴

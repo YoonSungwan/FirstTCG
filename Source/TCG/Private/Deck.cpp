@@ -61,7 +61,7 @@ void ADeck::AddCardToDeck(ACard* Card)
 {
 	if(!IsFullDeck())
 	{
-		Cards.Add(Card);	
+		Cards.Add(Card);
 	}
 	else
 	{

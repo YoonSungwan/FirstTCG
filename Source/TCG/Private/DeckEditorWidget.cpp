@@ -5,31 +5,34 @@
 #include "Deck.h"
 #include "Card.h"
 #include "CardWidget.h"
-#include "Components/Overlay.h"
+#include "Components/UniformGridPanel.h"
 
-void UDeckEditorWidget::InitializeDeck()
+void UDeckEditorWidget::OpenDeckEditor()
 {
-	
+	UE_LOG(LogTemp, Display, TEXT("Open Deck Editor..."));
+	AddToViewport();
+
+	bIsEditorOpen = true;
 }
 
-void UDeckEditorWidget::DisplayCardFromDeck(ADeck* Deck)
+void UDeckEditorWidget::DisplayCardFromDeck(ADeck* Deck, TSubclassOf<UCardWidget> CardWidgetClass)
 {
-	if(Deck != nullptr && Overlay)
+	//Deck != nullptr && 
+	if(CardWidgetClass)
 	{
-		UCardWidget* CardWidget = CreateWidget<UCardWidget>(this, CardWidgetClass);
-		if(CardWidget)
-		{
-			TArray<ACard*> Cards = Deck->GetDeck();
+		TArray<ACard*> Cards = Deck->GetDeck();
 
-			for(ACard* Card : Cards)
-			{
-				CardWidget->SetCardData(Card->CardData);
-				Overlay->AddChild(CardWidget);
-			}
-		}
-		else
+		for(int32 i=0; i<Cards.Num(); ++i)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("DeckEditorWidget : CardWidget is not Setting"));
+			UCardWidget* CardWidget = CreateWidget<UCardWidget>(this, CardWidgetClass);
+			ACard* Card = Cards[i];
+			
+			CardWidget->SetCardData(Card->CardData);
+			GridPanel->AddChildToUniformGrid(CardWidget, i/4, i%4);
 		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DeckEditorWidget : CardWidgetClass is not Setting"));
 	}
 }

@@ -10,8 +10,11 @@
  * 
  */
 class ADeck;
+class UDeckEditorWidget;
 class UCardWidget;
 class UOverlay;
+class UGridPanel;
+class UUniformGridPanel;
 
 UCLASS()
 class TCG_API UDeckEditorWidget : public UUserWidget
@@ -20,16 +23,21 @@ class TCG_API UDeckEditorWidget : public UUserWidget
 	
 public:
 	//TArray<ACard*> DeckCards;
-	
-	void InitializeDeck();
+
+	//UPROPERTY(meta=(BindWidget))
+	//UOverlay* Overlay;
+	float bIsEditorOpen = false;
 
 	UPROPERTY(meta=(BindWidget))
-	UOverlay* Overlay;
+	UUniformGridPanel* GridPanel;
 	
-	UPROPERTY(EditAnywhere, Category="CardWidget")
-	TSubclassOf<UCardWidget> CardWidgetClass;
+	//UPROPERTY(EditAnywhere, Category="CardWidget")
+	//TSubclassOf<UCardWidget> CardWidgetClass;
 
 	UFUNCTION()
-	void DisplayCardFromDeck(ADeck* Deck);
+	void OpenDeckEditor();
+	
+	UFUNCTION()
+	void DisplayCardFromDeck(ADeck* Deck, TSubclassOf<UCardWidget> CardWidgetClass);
 
 };

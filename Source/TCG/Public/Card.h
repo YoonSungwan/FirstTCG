@@ -15,6 +15,12 @@ class TCG_API ACard : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ACard();
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CardActor")
+	//class UCapsuleComponent* CapsuleCardComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CardActor")
+	class UStaticMeshComponent* StaticCardComp;
 	
 	UPROPERTY()
 	UCardData* CardData;
