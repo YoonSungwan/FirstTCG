@@ -59,7 +59,7 @@ void USpellCardData::ApplyHealEffect(AActor* Target)
 	case ESpellTargetType::SingleAlly:
 		if(Target)
 		{
-				
+			
 		}
 		break;
 	case ESpellTargetType::AllAllies:

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ActivateCardInterface.h"
 #include "CardData.h"
 #include "SpellCardData.generated.h"
 

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ActivateCardInterface.h"
 #include "GameFramework/Actor.h"
 #include "Card.generated.h"
 
