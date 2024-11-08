@@ -21,7 +21,7 @@ bool USecretCardData::IsConditionMet(const FString& EventName)
 	return false;
 }
 
-void USecretCardData::ActivateSecret(AActor* Target)
+void USecretCardData::ActivateSecret(ACard* Target)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Secret Activated : %s"), *CardName);
 	//Secret 카드 고유 효과 구현
@@ -46,7 +46,7 @@ void USecretCardData::ActivateSecret(AActor* Target)
 	}
 }
 
-void USecretCardData::ApplyEffect_Implementation(AActor* Target)
+void USecretCardData::ApplyEffect_Implementation(ACard* Target)
 {
 	Super::ApplyEffect_Implementation(Target);
 }

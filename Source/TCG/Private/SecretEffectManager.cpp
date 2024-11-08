@@ -20,7 +20,7 @@ void ASecretEffectManager::CheckAndTriggerSecrets(FString EventName, AActor* Tar
 		//for문이 길어지면 FString 대신 FName도 고려
 		if(Secret && Secret->IsConditionMet(EventName))
 		{
-			Secret->ActivateSecret(Target);
+			//Secret->ActivateSecret(Target);
 			ActiveSecrets.Remove(Secret);
 			//break 하고 이후 애니메이션 재생 등의 로직 우선 처리
 			break;

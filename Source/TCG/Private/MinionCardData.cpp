@@ -2,10 +2,9 @@
 
 
 #include "TCG/Public/MinionCardData.h"
+#include "Card.h"
 
-#include "AsyncTreeDifferences.h"
-
-void UMinionCardData::ApplyEffect_Implementation(AActor* Target)
+void UMinionCardData::ApplyEffect_Implementation(ACard* Target)
 {
 	//하수인 고유 효과
 	if(!Target) return;
@@ -32,23 +31,23 @@ void UMinionCardData::ApplyEffect_Implementation(AActor* Target)
 	}
 }
 
-void UMinionCardData::ApplyBattlecryEffect(AActor* Target)
+void UMinionCardData::ApplyBattlecryEffect(ACard* Target)
 {
 }
 
-void UMinionCardData::ApplyDeathrattleEffect(AActor* Target)
+void UMinionCardData::ApplyDeathrattleEffect(ACard* Target)
 {
 }
 
-void UMinionCardData::ApplyWindfuryEffect(AActor* Target)
+void UMinionCardData::ApplyWindfuryEffect(ACard* Target)
 {
 }
 
-void UMinionCardData::ApplyTauntEffect(AActor* Target)
+void UMinionCardData::ApplyTauntEffect(ACard* Target)
 {
 }
 
-void UMinionCardData::ApplyDivineShieldEffect(AActor* Target)
+void UMinionCardData::ApplyDivineShieldEffect(ACard* Target)
 {
 }
 
@@ -66,7 +65,7 @@ void UMinionCardData::AffectDebuff(EStatusDebuff Debuff)
 	}
 	else
 	{
-		this->StatusDebuff = Debuff;	
+		this->StatusDebuff = Debuff;
 	}
 }
 

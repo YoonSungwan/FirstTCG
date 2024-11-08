@@ -42,7 +42,7 @@ public:
 
 	//Secret 말동 함수
 	UFUNCTION(BlueprintCallable, Category="SecretCardData")
-	void ActivateSecret(AActor* Target);
+	void ActivateSecret(ACard* Target);
 
-	virtual void ApplyEffect_Implementation(AActor* Target) override;
+	virtual void ApplyEffect_Implementation(ACard* Target) override;
 };

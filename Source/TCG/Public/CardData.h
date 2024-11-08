@@ -9,12 +9,18 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnCardTriggered, AActor*, Actor);
+class UCardEffectManager;
+class ACard;
 UCLASS()
 class TCG_API UCardData : public UDataAsset
 {
 	GENERATED_BODY()
 
 public:
+	//Delegate 변수
+	FOnCardTriggered OnCardTriggered;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Card")
 	FString CardName;
 
@@ -33,8 +39,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Card")
 	UTexture2D* CardTexture;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Effect")
-	void ApplyEffect(AActor* Target);
+	UPROPERTY()
+	UCardEffectManager* CardEffectManager;
 
-	virtual void ApplyEffect_Implementation(AActor* Target);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Effect")
+	void ApplyEffect(ACard* Target);
+
+	virtual void ApplyEffect_Implementation(ACard* Target);
 };

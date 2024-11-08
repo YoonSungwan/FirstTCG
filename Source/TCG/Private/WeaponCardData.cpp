@@ -3,7 +3,7 @@
 
 #include "TCG/Public/WeaponCardData.h"
 
-void UWeaponCardData::ApplyEffect_Implementation(AActor* Target)
+void UWeaponCardData::ApplyEffect_Implementation(ACard* Target)
 {
 	Super::ApplyEffect_Implementation(Target);
 }

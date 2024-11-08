@@ -3,12 +3,14 @@
 
 #include "TCG/Public/SpellCardData.h"
 
+#include "CardEffectManager.h"
+
 /*int32 USpellCardData::AttackDamage(ACard* Card)
 {
 	return 0;
 }*/
 
-void USpellCardData::ApplyEffect_Implementation(AActor* Target)
+void USpellCardData::ApplyEffect_Implementation(ACard* Target)
 {
 	Super::ApplyEffect_Implementation(Target);
 
@@ -31,47 +33,50 @@ void USpellCardData::ApplyEffect_Implementation(AActor* Target)
 	}
 }
 
-void USpellCardData::ApplyDamageEffect(AActor* Target)
+void USpellCardData::ApplyDamageEffect(ACard* Target)
 {
 	switch (TargetType)
 	{
 		case ESpellTargetType::SingleEnemy:
 			if(Target)
 			{
-				
+				OnDamageDelegate.Broadcast(Target, EffectAmount);
 			}
 			break;
 		case ESpellTargetType::AllEnemies:
 			if(Target)
 			{
-				
+				OnAllDamageDelegate.Broadcast(EffectAmount);
 			}
 			break;
+		/*
+		 * 자해
+		 */
 		default:
 			break;
 	}
 }
 
-void USpellCardData::ApplyHealEffect(AActor* Target)
+void USpellCardData::ApplyHealEffect(ACard* Target)
 {
 	switch (TargetType)
 	{
 	case ESpellTargetType::SingleAlly:
 		if(Target)
 		{
-			
+			OnHealDelegate.Broadcast(Target, EffectAmount);
 		}
 		break;
 	case ESpellTargetType::AllAllies:
 		if(Target)
 		{
-				
+			OnAllHealDelegate.Broadcast(EffectAmount);
 		}
 		break;
 	case ESpellTargetType::Self:
 		if(Target)
 		{
-				
+			OnHealDelegate.Broadcast(Target, EffectAmount);
 		}
 		break;
 	default:
@@ -79,10 +84,10 @@ void USpellCardData::ApplyHealEffect(AActor* Target)
 	}
 }
 
-void USpellCardData::ApplyBuffEffect(AActor* Target)
+void USpellCardData::ApplyBuffEffect(ACard* Target)
 {
 }
 
-void USpellCardData::ApplyDebuffEffect(AActor* Target)
+void USpellCardData::ApplyDebuffEffect(ACard* Target)
 {
 }

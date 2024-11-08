@@ -29,5 +29,5 @@ public:
 
 	bool PlusDurability(ACard* TargetCard, int32 Durability);
 
-	virtual void ApplyEffect_Implementation(AActor* Target) override;
+	virtual void ApplyEffect_Implementation(ACard* Target) override;
 };

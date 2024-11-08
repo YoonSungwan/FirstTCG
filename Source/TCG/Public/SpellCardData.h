@@ -29,6 +29,12 @@ enum class ESpellTargetType	: uint8	//멀티타겟은 TArray를 사용해서 Sin
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAllDamageDelegate, int32, Amount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDamageDelegate, ACard*, Target, int32, Amount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAllHealDelegate, int32, Amount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHealDelegate, ACard*, Target, int32, Amount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEnhanceDelegate, ACard*, Target, ESpellEffectType, Buff);
+
 class ACard;
 UCLASS()
 class TCG_API USpellCardData : public UCardData
@@ -36,6 +42,14 @@ class TCG_API USpellCardData : public UCardData
 	GENERATED_BODY()
 
 public:
+	//Delegate 변수들
+	FOnAllDamageDelegate OnAllDamageDelegate;
+	FOnDamageDelegate OnDamageDelegate;
+	FOnAllHealDelegate OnAllHealDelegate;
+	FOnHealDelegate OnHealDelegate;
+	FOnEnhanceDelegate OnEnhanceDelegate;
+
+	//Spell Card Data
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpellCardData")
 	FString EffectDescription;		//효과 설명
 
@@ -48,11 +62,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpellCardData")
 	int32 EffectAmount;				//효과 강도
 
-	virtual void ApplyEffect_Implementation(AActor* Target) override;
+	//효과에 따른 BroadCast
+	virtual void ApplyEffect_Implementation(ACard* Target) override;
 
 protected:
-	void ApplyDamageEffect(AActor* Target);
-	void ApplyHealEffect(AActor* Target);
-	void ApplyBuffEffect(AActor* Target);
-	void ApplyDebuffEffect(AActor* Target);
+	void ApplyDamageEffect(ACard* Target);
+	void ApplyHealEffect(ACard* Target);
+	void ApplyBuffEffect(ACard* Target);
+	void ApplyDebuffEffect(ACard* Target);
 };

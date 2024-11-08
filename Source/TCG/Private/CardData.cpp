@@ -3,7 +3,7 @@
 
 #include "TCG/Public/CardData.h"
 
-void UCardData::ApplyEffect_Implementation(AActor* Target)
+void UCardData::ApplyEffect_Implementation(ACard* Target)
 {
 	UE_LOG(LogTemp, Log, TEXT("%s: 기본효과 적용"), *CardName);
 	

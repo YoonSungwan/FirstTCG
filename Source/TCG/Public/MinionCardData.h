@@ -67,15 +67,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MinionCardData")
 	int32 EffectAmount;
 
-	virtual void ApplyEffect_Implementation(AActor* Target) override;
+	virtual void ApplyEffect_Implementation(ACard* Target) override;
 
 protected:
 
-	void ApplyBattlecryEffect(AActor* Target);
-	void ApplyDeathrattleEffect(AActor* Target);
-	void ApplyWindfuryEffect(AActor* Target);
-	void ApplyTauntEffect(AActor* Target);
-	void ApplyDivineShieldEffect(AActor* Target);
+	void ApplyBattlecryEffect(ACard* Target);
+	void ApplyDeathrattleEffect(ACard* Target);
+	void ApplyWindfuryEffect(ACard* Target);
+	void ApplyTauntEffect(ACard* Target);
+	void ApplyDivineShieldEffect(ACard* Target);
 	
 	void AffectBuff(EStatusBuff Buff);
 	void AffectDebuff(EStatusDebuff Debuff);
